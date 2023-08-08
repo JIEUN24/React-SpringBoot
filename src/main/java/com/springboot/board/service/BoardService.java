@@ -14,22 +14,25 @@ public class BoardService {
     @Resource(name = "boardMapper")
     private BoardMapper mapper;
 
-    public ArrayList<BoardDto> getList(HashMap<String, String> map) throws Exception{
-        ArrayList<BoardDto> list = (ArrayList<BoardDto>) mapper.getList(map);
+    public ArrayList<BoardDto> getPostList(HashMap<String, String> map) throws Exception{
+        ArrayList<BoardDto> list = mapper.getPostList(map);
         return list;
     }
 
     public HashMap<String,String> addPost(BoardDto boardDto){
-        int result = 0;
+        int result = mapper.addPost(boardDto);
 
-        HashMap<String,String > code = new HashMap<>();
+        HashMap<String,String > response = new HashMap<>();
         // add 쿼리를 날림 성공하면 1 실패 0
-        result = mapper.addPost(boardDto);
+        if (result == 1) {
+            response.put("status", "success");
+            response.put("message", "게시글이 등록이 완료되었습니다.");
+        } else {
+            response.put("status", "fail");
+            response.put("message", "게시글 등록에 실패하였습니다.");
+        }
 
-        if(result == 1) code.put("msg","등록이 정상적으로 완료되었습니다.");
-        if(result == 0) code.put("msg","등록에 실패하였습니다.");
-
-        return code;
+        return response;
     }
 
     public HashMap<String, String> updatePost(BoardDto boardDto) {
