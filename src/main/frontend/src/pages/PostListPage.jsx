@@ -1,64 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import PostList from '../components/PostList';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PostList from "../components/PostList";
+import PaginationSize from "../components/PaginationSize";
+import axios from "axios";
+import styled from "styled-components";
+import Swal from "sweetalert2";
 
 const PostListPage = () => {
   const navigate = useNavigate();
   const [list, setList] = useState([]);
-  const [post, setPost] = useState({
-    title: '',
-    content: '',
-    userName: '',
-  });
+  const [totalPages, setTotalPages] = useState(0);
+  const [page, setPage] = useState(1);
 
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
-    setPost({ ...post, [name]: value });
-
-    console.log(post);
-  };
-
-  const getList = () => {
+  const getList = (page) => {
     axios
-      .get('/board/list')
+      .get(`/board/list?page=${page}&size=10`)
       .then((res) => {
-        console.log(res);
-        setList(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const addContent = () => {
-    axios
-      .post('/board/add', {
-        title: post?.title,
-        content: post?.content,
-        userName: post?.userName,
-      })
-      .then((res) => {
-        console.log(res);
-        setList([...list, post]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const upDateContent = (id) => {
-    axios
-      .put('/board/update', {
-        id: id,
-        title: post?.title,
-        content: post?.content,
-        userName: post?.userName,
-      })
-      .then((res) => {
-        console.log(res);
-        getList();
+        setTotalPages(res.data.totalPages);
+        setList(res.data.posts);
       })
       .catch((err) => {
         console.log(err);
@@ -66,22 +25,35 @@ const PostListPage = () => {
   };
 
   const deleteContent = (id) => {
-    axios
-      .delete(`/board/delete/${id}`)
-      .then((res) => {
-        setList((ele) => {
-          return ele.filter((list) => list.id !== id);
-        });
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    Swal.fire({
+      title: "게시물을 삭제하시겠습니까?",
+      text: "삭제한 게시물은 다시 되돌릴 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3c52bb",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`/board/delete/${id}`)
+          .then((res) => {
+            setList((ele) => {
+              return ele.filter((list) => list.id !== id);
+            });
+            Swal.fire("삭제완료", "게시물이 정상적으로 삭제되었습니다.", "success");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
   };
 
   useEffect(() => {
-    getList();
-  }, []);
+    getList(page);
+  }, [page]);
 
   return (
     <ListWrap>
@@ -89,7 +61,7 @@ const PostListPage = () => {
         <h3>리뷰 게시판</h3>
         <button
           onClick={() => {
-            navigate('/create-post');
+            navigate("/create-post");
           }}
         >
           작성
@@ -99,36 +71,7 @@ const PostListPage = () => {
         list?.map((item, idx) => {
           return <PostList key={idx} list={item} id={idx} deleteContent={deleteContent} />;
         })}
-      {list?.length === 0 && <div>게시물 없음</div>}
-      <input
-        name='title'
-        type='text'
-        onChange={(e) => {
-          onChangeHandler(e);
-        }}
-      />
-      <input
-        name='content'
-        type='text'
-        onChange={(e) => {
-          onChangeHandler(e);
-        }}
-      />
-      <input
-        name='userName'
-        type='text'
-        onChange={(e) => {
-          onChangeHandler(e);
-        }}
-      />
-      <button onClick={addContent}>add</button>
-      <button
-        onClick={() => {
-          upDateContent(14);
-        }}
-      >
-        update
-      </button>
+      <PaginationSize totalPages={totalPages} setPage={setPage} />
     </ListWrap>
   );
 };

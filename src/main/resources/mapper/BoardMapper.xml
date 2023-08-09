@@ -13,6 +13,11 @@
         update_at as updateAt
         FROM
         post
+        ORDER BY createAt DESC
+        LIMIT #{size} OFFSET #{start} <!-- 페이징 처리 부분 -->
+    </select>
+    <select id="getTotalPostCount" resultType="int">
+        SELECT COUNT(*) FROM post
     </select>
     <insert id="addPost" parameterType="com.springboot.board.controller.BoardDto">
         INSERT INTO post

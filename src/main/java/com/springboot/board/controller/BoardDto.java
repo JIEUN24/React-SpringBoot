@@ -13,6 +13,8 @@ public class BoardDto {
     private String userName; // 작성자
     private String createAt; // 최초 작성일
     private String updateAt; // 게시글 업데이트 날짜
+    private int page; // 페이지 번호
+    private int size; // 페이지 당 데이터 수
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -48,10 +50,15 @@ public class BoardDto {
     public String getUpdateAt() {
         return updateAt;
     }
-
     public void setUpdateAt(String updateAt) {
         this.updateAt = updateAt;
     }
+
+    public int getPage() { return page; }
+    public void setPage(int page) { this.page = page; }
+
+    public int getSize() { return size; }
+    public void setSize(int size) { this.size = size; }
 
     @Override
     public String toString() {

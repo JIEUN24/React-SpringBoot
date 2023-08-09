@@ -14,15 +14,36 @@ public class BoardService {
     @Resource(name = "boardMapper")
     private BoardMapper mapper;
 
-    public ArrayList<BoardDto> getPostList(HashMap<String, String> map) throws Exception{
-        ArrayList<BoardDto> list = mapper.getPostList(map);
-        return list;
+    // 게시글 조회
+    public ArrayList<BoardDto> getPostList(HashMap<String, Integer> paramMap) throws Exception{
+        ArrayList<BoardDto> response = mapper.getPostList(paramMap);
+        if (response == null) {
+            throw new Exception("게시글 목록이 없습니다.");
+        }
+        return response;
     }
 
+    // 전체 페이지 조회
+    public int getTotalPostCount() {
+        return mapper.getTotalPostCount();
+    }
+
+    // 게시글 상세 조회
+    public BoardDto getDetailPost(Long id) throws Exception {
+        BoardDto response = mapper.findById(id);
+
+        if (response == null) {
+            throw new Exception("게시글을 찾을 수 없습니다.");
+        }
+        return response;
+    }
+
+    // 게시글 추가
     public HashMap<String,String> addPost(BoardDto boardDto){
         int result = mapper.addPost(boardDto);
 
         HashMap<String,String > response = new HashMap<>();
+
         // add 쿼리를 날림 성공하면 1 실패 0
         if (result == 1) {
             response.put("status", "success");
@@ -35,6 +56,7 @@ public class BoardService {
         return response;
     }
 
+    // 게시글 수정
     public HashMap<String, String> updatePost(BoardDto boardDto) {
         BoardDto originalPost = mapper.findById(boardDto.getId());
 
@@ -55,6 +77,7 @@ public class BoardService {
         return response;
     }
 
+    // 게시글 삭제
     public HashMap<String, String> deletePost(Long id) {
         int result = mapper.deletePost(id);
 
