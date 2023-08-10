@@ -16,8 +16,12 @@ public class BoardDto {
     private int page; // 페이지 번호
     private int size; // 페이지 당 데이터 수
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -54,11 +58,19 @@ public class BoardDto {
         this.updateAt = updateAt;
     }
 
-    public int getPage() { return page; }
-    public void setPage(int page) { this.page = page; }
+    public int getPage() {
+        return page;
+    }
+    public void setPage(int page) {
+        this.page = page;
+    }
 
-    public int getSize() { return size; }
-    public void setSize(int size) { this.size = size; }
+    public int getSize() {
+        return size;
+    }
+    public void setSize(int size) {
+        this.size = size;
+    }
 
     @Override
     public String toString() {

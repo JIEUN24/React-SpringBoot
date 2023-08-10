@@ -44,7 +44,7 @@ public class BoardService {
 
         HashMap<String,String > response = new HashMap<>();
 
-        // add 쿼리를 날림 성공하면 1 실패 0
+        // add 쿼리를 날림 성공하면 true: 1 실패 false: 0
         if (result == 1) {
             response.put("status", "success");
             response.put("message", "게시글이 등록이 완료되었습니다.");
@@ -61,7 +61,6 @@ public class BoardService {
         BoardDto originalPost = mapper.findById(boardDto.getId());
 
         if (originalPost == null) {
-            // 해당 ID를 가진 게시물을 찾을 수 없는 경우 에러 처리
             HashMap<String, String> errorResponse = new HashMap<>();
             errorResponse.put("status", "error");
             errorResponse.put("message", "게시물을 찾을 수 없습니다.");
@@ -80,7 +79,6 @@ public class BoardService {
     // 게시글 삭제
     public HashMap<String, String> deletePost(Long id) {
         int result = mapper.deletePost(id);
-
         HashMap<String, String> response = new HashMap<>();
 
         if (result == 1) {

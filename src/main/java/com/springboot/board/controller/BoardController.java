@@ -20,7 +20,6 @@ public class BoardController {
         HashMap<String, Integer> paramMap = new HashMap<>();
         paramMap.put("start", (page - 1) * size); // 시작 인덱스
         paramMap.put("size", size); // 페이지당 게시글 수
-        System.out.println(paramMap);
 
         ArrayList<BoardDto> postList = service.getPostList(paramMap);
         int totalPostCount = service.getTotalPostCount();
@@ -37,7 +36,6 @@ public class BoardController {
     @GetMapping("/board/list/{id}")
     public BoardDto getPost(@PathVariable("id") Long id) throws Exception {
         BoardDto response = service.getDetailPost(id);
-        System.out.println(response);
 
         return response;
     }
@@ -63,8 +61,6 @@ public class BoardController {
     // 게시글 삭제
     @DeleteMapping("/board/delete/{id}")
     public HashMap<String, String> deletePost(@PathVariable("id") Long id) throws Exception {
-        System.out.println(id);
-
         HashMap<String, String> response = new HashMap<>();
         response = service.deletePost(id);
 

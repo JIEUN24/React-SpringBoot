@@ -14,7 +14,7 @@ const PostListPage = () => {
 
   const getList = (page) => {
     axios
-      .get(`/board/list?page=${page}&size=10`)
+      .get(`/board/list?page=${page}&size=5`)
       .then((res) => {
         setTotalPages(res.data.totalPages);
         setList(res.data.posts);
