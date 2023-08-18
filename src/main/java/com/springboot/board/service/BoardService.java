@@ -2,16 +2,17 @@ package com.springboot.board.service;
 
 import com.springboot.board.controller.BoardDto;
 import com.springboot.board.mapper.BoardMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@Service("boardService")
+@Component
 public class BoardService {
 
-    @Resource(name = "boardMapper")
+    @Autowired
     private BoardMapper mapper;
 
     // 게시글 조회

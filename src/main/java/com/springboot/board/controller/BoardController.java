@@ -1,6 +1,7 @@
 package com.springboot.board.controller;
 
 import com.springboot.board.service.BoardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -10,10 +11,12 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/posts")
 public class BoardController {
+    private final BoardService service;
 
-    // 의존관계 연결
-    @Resource(name = "boardService")
-    private BoardService service;
+    @Autowired
+    public BoardController(BoardService service) {
+        this.service = service;
+    }
 
     // 게시글 조회
     @GetMapping

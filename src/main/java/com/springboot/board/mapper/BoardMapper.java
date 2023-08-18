@@ -2,11 +2,13 @@ package com.springboot.board.mapper;
 
 import com.springboot.board.controller.BoardDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 @Mapper
+@Repository
 public interface BoardMapper {
 
     // 게시글 조회

@@ -22,25 +22,25 @@
     </select>
     <insert id="addPost" parameterType="com.springboot.board.controller.BoardDto">
         INSERT INTO post
-            (title, content, user_name)
+        (title, content, user_name)
         VALUES (#{title}, #{content}, #{userName});
     </insert>
     <select id="findById" resultType="com.springboot.board.controller.BoardDto">
         SELECT id,
-               title,
-               content,
-               user_name as userName,
-               create_at as createAt,
-               update_at as updateAt
+        title,
+        content,
+        user_name as userName,
+        create_at as createAt,
+        update_at as updateAt
         FROM post
         WHERE id = #{id}
     </select>
     <update id="updatePost" parameterType="com.springboot.board.controller.BoardDto">
         UPDATE post
-        SET title     = #{title},
-            content   = #{content},
-            user_name = #{userName},
-            update_at = #{updateAt}
+        SET title = #{title},
+        content = #{content},
+        user_name = #{userName},
+        update_at = #{updateAt}
         WHERE id = #{id}
     </update>
     <delete id="deletePost" parameterType="java.lang.Long">

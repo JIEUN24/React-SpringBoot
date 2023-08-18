@@ -1,11 +1,5 @@
 package com.springboot.board.controller;
 
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-
-
 public class BoardDto {
     private Long id; // id
     private String title; // 제목
