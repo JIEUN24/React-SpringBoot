@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @RestController
+@RequestMapping("/posts")
 public class BoardController {
 
     // 의존관계 연결
@@ -15,7 +16,7 @@ public class BoardController {
     private BoardService service;
 
     // 게시글 조회
-    @GetMapping("/board/list")
+    @GetMapping
     public HashMap<String, Object> getList(@RequestParam("page") int page, @RequestParam("size") int size) throws Exception {
         HashMap<String, Integer> paramMap = new HashMap<>();
         paramMap.put("start", (page - 1) * size); // 시작 인덱스
@@ -33,7 +34,7 @@ public class BoardController {
     }
 
     // 게시글 상세 조회
-    @GetMapping("/board/list/{id}")
+    @GetMapping("/{id}")
     public BoardDto getPost(@PathVariable("id") Long id) throws Exception {
         BoardDto response = service.getDetailPost(id);
 
@@ -41,25 +42,25 @@ public class BoardController {
     }
 
     // 게시글 추가
-    @PostMapping("/board/add")
+    @PostMapping
     public HashMap<String, String> addPost(@RequestBody BoardDto body) throws Exception {
-        HashMap<String,String> response = new HashMap<>();
+        HashMap<String, String> response = new HashMap<>();
         response = service.addPost(body);
 
         return response;
     }
 
     // 게시글 수정
-    @PutMapping("/board/update")
+    @PatchMapping
     public HashMap<String, String> updatePost(@RequestBody BoardDto boardDto) throws Exception {
-        HashMap<String,String> response = new HashMap<>();
+        HashMap<String, String> response = new HashMap<>();
         response = service.updatePost(boardDto);
 
         return response;
     }
 
     // 게시글 삭제
-    @DeleteMapping("/board/delete/{id}")
+    @DeleteMapping("/{id}")
     public HashMap<String, String> deletePost(@PathVariable("id") Long id) throws Exception {
         HashMap<String, String> response = new HashMap<>();
         response = service.deletePost(id);
