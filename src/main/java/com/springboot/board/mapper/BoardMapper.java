@@ -1,6 +1,6 @@
 package com.springboot.board.mapper;
 
-import com.springboot.board.controller.BoardDto;
+import com.springboot.board.dto.BoardDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
 public interface BoardMapper {
 
     // 게시글 조회
-    public ArrayList<BoardDto> getPostList(HashMap<String,Integer> paramMap);
+    public ArrayList<BoardDto> getPostList(HashMap<String, Integer> paramMap);
 
     // 게시글 상세 조회
     public BoardDto findById(Long id);
@@ -27,6 +27,6 @@ public interface BoardMapper {
     public int updatePost(BoardDto boardDto);
 
     // 게시글 삭제
-    public  int deletePost(Long id);
+    public int deletePost(Long id);
 
 }

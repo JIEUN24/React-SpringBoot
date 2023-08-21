@@ -1,10 +1,10 @@
 package com.springboot.board.controller;
 
+import com.springboot.board.dto.BoardDto;
 import com.springboot.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,7 +54,7 @@ public class BoardController {
     }
 
     // 게시글 수정
-    @PatchMapping
+    @PutMapping
     public HashMap<String, String> updatePost(@RequestBody BoardDto boardDto) throws Exception {
         HashMap<String, String> response = new HashMap<>();
         response = service.updatePost(boardDto);

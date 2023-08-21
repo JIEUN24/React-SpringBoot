@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.board.mapper.BoardMapper">
-    <select id="getPostList" resultType="com.springboot.board.controller.BoardDto">
+    <select id="getPostList" resultType="com.springboot.board.dto.BoardDto">
         SELECT
         id,
         title,
@@ -20,27 +20,27 @@
         SELECT COUNT(*)
         FROM post
     </select>
-    <insert id="addPost" parameterType="com.springboot.board.controller.BoardDto">
+    <insert id="addPost" parameterType="com.springboot.board.dto.BoardDto">
         INSERT INTO post
-        (title, content, user_name)
+            (title, content, user_name)
         VALUES (#{title}, #{content}, #{userName});
     </insert>
-    <select id="findById" resultType="com.springboot.board.controller.BoardDto">
+    <select id="findById" resultType="com.springboot.board.dto.BoardDto">
         SELECT id,
-        title,
-        content,
-        user_name as userName,
-        create_at as createAt,
-        update_at as updateAt
+               title,
+               content,
+               user_name as userName,
+               create_at as createAt,
+               update_at as updateAt
         FROM post
         WHERE id = #{id}
     </select>
-    <update id="updatePost" parameterType="com.springboot.board.controller.BoardDto">
+    <update id="updatePost" parameterType="com.springboot.board.dto.BoardDto">
         UPDATE post
-        SET title = #{title},
-        content = #{content},
-        user_name = #{userName},
-        update_at = #{updateAt}
+        SET title     = #{title},
+            content   = #{content},
+            user_name = #{userName},
+            update_at = #{updateAt}
         WHERE id = #{id}
     </update>
     <delete id="deletePost" parameterType="java.lang.Long">

@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const PostList = (props) => {
   const navigate = useNavigate();
-
   const { id, list, deleteContent } = props;
   const [click, setClick] = useState(false);
 
