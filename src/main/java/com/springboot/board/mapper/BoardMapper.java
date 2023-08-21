@@ -12,7 +12,7 @@ import java.util.HashMap;
 public interface BoardMapper {
 
     // 게시글 조회
-    public ArrayList<BoardDto> getPostList(HashMap<String, Integer> paramMap);
+    public ArrayList<BoardDto> getPostList(BoardDto dto);
 
     // 게시글 상세 조회
     public BoardDto findById(Long id);

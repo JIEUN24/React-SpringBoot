@@ -15,8 +15,8 @@ public class BoardService {
     private BoardMapper mapper;
 
     // 게시글 조회
-    public ArrayList<BoardDto> getPostList(HashMap<String, Integer> paramMap) throws Exception {
-        ArrayList<BoardDto> response = mapper.getPostList(paramMap);
+    public ArrayList<BoardDto> getPostList(BoardDto dto) throws Exception {
+        ArrayList<BoardDto> response = mapper.getPostList(dto);
 
         if (response == null) {
             throw new Exception("게시글 목록이 없습니다.");

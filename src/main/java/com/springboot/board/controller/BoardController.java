@@ -20,16 +20,17 @@ public class BoardController {
 
     // 게시글 조회
     @GetMapping
-    public HashMap<String, Object> getList(@RequestParam("page") int page, @RequestParam("size") int size) throws Exception {
-        HashMap<String, Integer> paramMap = new HashMap<>();
-        paramMap.put("start", (page - 1) * size); // 시작 인덱스
-        paramMap.put("size", size); // 페이지당 게시글 수
+    public HashMap<String, Object> getList(@ModelAttribute BoardDto param) throws Exception {
 
-        ArrayList<BoardDto> postList = service.getPostList(paramMap);
+        int page = param.getPage();
+        int size = param.getSize();
+        param.setStart((page - 1) * size);
+
+        ArrayList<BoardDto> postList = service.getPostList(param);
         int totalPostCount = service.getTotalPostCount();
         int totalPages = (int) Math.ceil((double) totalPostCount / size);
 
-        HashMap<String, Object> response = new HashMap<>();
+        HashMap<String, Object> response = new HashMap<String, Object>();
         response.put("posts", postList);
         response.put("totalPages", totalPages);
 
