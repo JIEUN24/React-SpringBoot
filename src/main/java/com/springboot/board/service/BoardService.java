@@ -1,5 +1,6 @@
 package com.springboot.board.service;
 
+import ch.qos.logback.core.pattern.FormatInfo;
 import com.springboot.board.dto.BoardDto;
 import com.springboot.board.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,13 @@ public class BoardService {
     }
 
     // 게시글 상세 조회
-    public BoardDto getDetailPost(Long id) throws Exception {
-        BoardDto response = mapper.findById(id);
+    public BoardDto getDetailPost(BoardDto boardDto) throws Exception {
+        BoardDto response = mapper.findById(boardDto);
 
         if (response == null) {
             throw new Exception("게시글을 찾을 수 없습니다.");
         }
+
         return response;
     }
 
@@ -69,7 +71,7 @@ public class BoardService {
 
     // 게시글 수정
     public HashMap<String, String> updatePost(BoardDto boardDto) {
-        BoardDto originalPost = mapper.findById(boardDto.getId());
+        BoardDto originalPost = mapper.findById(boardDto);
 
         if (originalPost == null) {
             HashMap<String, String> errorResponse = new HashMap<>();
@@ -88,8 +90,8 @@ public class BoardService {
     }
 
     // 게시글 삭제
-    public HashMap<String, String> deletePost(Long id) {
-        int result = mapper.deletePost(id);
+    public HashMap<String, String> deletePost(BoardDto boardDto) {
+        int result = mapper.deletePost(boardDto);
         HashMap<String, String> response = new HashMap<>();
 
         if (result == 1) {

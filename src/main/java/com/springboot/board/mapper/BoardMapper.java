@@ -21,10 +21,10 @@ public interface BoardMapper {
     /**
      * 게시글 상세정보 조회
      *
-     * @param id - PK
+     * @param boardDto - 게시글 id
      * @return 게시글 상세정보
      */
-    public BoardDto findById(Long id);
+    public BoardDto findById(BoardDto boardDto);
 
     /**
      * 전체 페이지 수 조회
@@ -50,8 +50,8 @@ public interface BoardMapper {
     /**
      * 게시글 삭제
      *
-     * @param id - PK
+     * @param boardDto - 게시글 id
      */
-    public int deletePost(Long id);
+    public int deletePost(BoardDto boardDto);
 
 }

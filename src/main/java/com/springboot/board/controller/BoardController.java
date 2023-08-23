@@ -5,8 +5,8 @@ import com.springboot.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/posts")
@@ -32,7 +32,7 @@ public class BoardController {
 
     @GetMapping("/{id}")
     public BoardDto getPost(@ModelAttribute BoardDto boardDto) throws Exception {
-        BoardDto response = service.getDetailPost(boardDto.getId());
+        BoardDto response = service.getDetailPost(boardDto);
 
         return response;
     }
@@ -57,11 +57,8 @@ public class BoardController {
     // 게시글 삭제
     @DeleteMapping("/{id}")
     public HashMap<String, String> deletePost(@ModelAttribute BoardDto boardDto) throws Exception {
-
-        System.out.println(boardDto);
-
         HashMap<String, String> response = new HashMap<>();
-        response = service.deletePost(boardDto.getId());
+        response = service.deletePost(boardDto);
 
         return response;
     }
