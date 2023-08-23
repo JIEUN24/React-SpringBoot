@@ -4,17 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.board.mapper.BoardMapper">
     <select id="getPostList" resultType="com.springboot.board.dto.BoardDto">
-        SELECT
-        id,
+        SELECT id,
         title,
         content,
         user_name as userName,
         create_at as createAt,
         update_at as updateAt
-        FROM
-        post
+        FROM post
         ORDER BY createAt DESC
-        LIMIT #{size} OFFSET #{start} <!-- 페이징 처리 부분 -->
+        LIMIT #{size}
+        OFFSET #{start} <!-- 페이징 처리 부분 -->
     </select>
     <select id="getTotalPostCount" resultType="int">
         SELECT COUNT(*)

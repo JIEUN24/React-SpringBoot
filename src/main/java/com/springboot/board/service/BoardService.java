@@ -15,18 +15,28 @@ public class BoardService {
     private BoardMapper mapper;
 
     // 게시글 조회
-    public ArrayList<BoardDto> getPostList(BoardDto dto) throws Exception {
-        ArrayList<BoardDto> response = mapper.getPostList(dto);
+    public ArrayList<BoardDto> getPostList(BoardDto boardDto) throws Exception {
+        int page = boardDto.getPage();
+        int size = boardDto.getSize();
+        int start = (page - 1) * size;
+        boardDto.setStart(start);
+
+        ArrayList<BoardDto> response = mapper.getPostList(boardDto);
 
         if (response == null) {
             throw new Exception("게시글 목록이 없습니다.");
         }
+
         return response;
     }
 
     // 전체 페이지 조회
-    public int getTotalPostCount() {
-        return mapper.getTotalPostCount();
+    public int getTotalPostCount(BoardDto boardDto) {
+        int size = boardDto.getSize();
+        int totalPostCount = mapper.getTotalPostCount();
+        int totalPages = (int) Math.ceil((double) totalPostCount / size);
+
+        return totalPages;
     }
 
     // 게시글 상세 조회

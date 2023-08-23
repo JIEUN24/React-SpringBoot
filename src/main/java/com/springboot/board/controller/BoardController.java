@@ -18,38 +18,29 @@ public class BoardController {
         this.service = service;
     }
 
-    // 게시글 조회
     @GetMapping
-    public HashMap<String, Object> getList(@ModelAttribute BoardDto param) throws Exception {
+    public HashMap<String, Object> getList(@ModelAttribute BoardDto boardDto) throws Exception {
+        ArrayList<BoardDto> postList = service.getPostList(boardDto);
+        int totalPage = service.getTotalPostCount(boardDto);
 
-        int page = param.getPage();
-        int size = param.getSize();
-        param.setStart((page - 1) * size);
-
-        ArrayList<BoardDto> postList = service.getPostList(param);
-        int totalPostCount = service.getTotalPostCount();
-        int totalPages = (int) Math.ceil((double) totalPostCount / size);
-
-        HashMap<String, Object> response = new HashMap<String, Object>();
+        HashMap<String, Object> response = new HashMap<>();
         response.put("posts", postList);
-        response.put("totalPages", totalPages);
+        response.put("totalPages", totalPage);
 
         return response;
     }
 
-    // 게시글 상세 조회
     @GetMapping("/{id}")
-    public BoardDto getPost(@PathVariable("id") Long id) throws Exception {
-        BoardDto response = service.getDetailPost(id);
+    public BoardDto getPost(@ModelAttribute BoardDto boardDto) throws Exception {
+        BoardDto response = service.getDetailPost(boardDto.getId());
 
         return response;
     }
 
-    // 게시글 추가
     @PostMapping
-    public HashMap<String, String> addPost(@RequestBody BoardDto body) throws Exception {
+    public HashMap<String, String> addPost(@RequestBody BoardDto boardDto) throws Exception {
         HashMap<String, String> response = new HashMap<>();
-        response = service.addPost(body);
+        response = service.addPost(boardDto);
 
         return response;
     }
@@ -65,9 +56,12 @@ public class BoardController {
 
     // 게시글 삭제
     @DeleteMapping("/{id}")
-    public HashMap<String, String> deletePost(@PathVariable("id") Long id) throws Exception {
+    public HashMap<String, String> deletePost(@ModelAttribute BoardDto boardDto) throws Exception {
+
+        System.out.println(boardDto);
+
         HashMap<String, String> response = new HashMap<>();
-        response = service.deletePost(id);
+        response = service.deletePost(boardDto.getId());
 
         return response;
     }
