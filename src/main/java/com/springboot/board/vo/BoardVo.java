@@ -1,9 +1,10 @@
-package com.springboot.board.dto;
+package com.springboot.board.vo;
 
-import lombok.*;
+
+import lombok.Data;
 
 @Data
-public class BoardDto {
+public class BoardVo {
     private Long id; // id
     private String title; // 제목
     private String content; // 내용
@@ -14,4 +15,3 @@ public class BoardDto {
     private int start; // 시작 인덱스
     private int size; // 페이지 당 데이터 수
 }
-

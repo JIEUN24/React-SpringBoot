@@ -3,6 +3,7 @@ package com.springboot.board.service;
 import ch.qos.logback.core.pattern.FormatInfo;
 import com.springboot.board.dto.BoardDto;
 import com.springboot.board.mapper.BoardMapper;
+import com.springboot.board.vo.BoardVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,13 +17,13 @@ public class BoardService {
     private BoardMapper mapper;
 
     // 게시글 조회
-    public ArrayList<BoardDto> getPostList(BoardDto boardDto) throws Exception {
-        int page = boardDto.getPage();
-        int size = boardDto.getSize();
+    public ArrayList<BoardVo> getPostList(BoardVo boardVo) throws Exception {
+        int page = boardVo.getPage();
+        int size = boardVo.getSize();
         int start = (page - 1) * size;
-        boardDto.setStart(start);
+        boardVo.setStart(start);
 
-        ArrayList<BoardDto> response = mapper.getPostList(boardDto);
+        ArrayList<BoardVo> response = mapper.getPostList(boardVo);
 
         if (response == null) {
             throw new Exception("게시글 목록이 없습니다.");
@@ -32,8 +33,8 @@ public class BoardService {
     }
 
     // 전체 페이지 조회
-    public int getTotalPostCount(BoardDto boardDto) {
-        int size = boardDto.getSize();
+    public int getTotalPostCount(BoardVo boardVo) {
+        int size = boardVo.getSize();
         int totalPostCount = mapper.getTotalPostCount();
         int totalPages = (int) Math.ceil((double) totalPostCount / size);
 
@@ -41,8 +42,8 @@ public class BoardService {
     }
 
     // 게시글 상세 조회
-    public BoardDto getDetailPost(BoardDto boardDto) throws Exception {
-        BoardDto response = mapper.findById(boardDto);
+    public ArrayList<BoardVo> getDetailPost(BoardVo boardVo) throws Exception {
+        ArrayList<BoardVo> response = mapper.getPostList(boardVo);
 
         if (response == null) {
             throw new Exception("게시글을 찾을 수 없습니다.");

@@ -2,6 +2,7 @@ package com.springboot.board.controller;
 
 import com.springboot.board.dto.BoardDto;
 import com.springboot.board.service.BoardService;
+import com.springboot.board.vo.BoardVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,9 @@ public class BoardController {
     }
 
     @GetMapping
-    public HashMap<String, Object> getList(@ModelAttribute BoardDto boardDto) throws Exception {
-        ArrayList<BoardDto> postList = service.getPostList(boardDto);
-        int totalPage = service.getTotalPostCount(boardDto);
+    public HashMap<String, Object> getList(@ModelAttribute BoardVo boardVo) throws Exception {
+        ArrayList<BoardVo> postList = service.getPostList(boardVo);
+        int totalPage = service.getTotalPostCount(boardVo);
 
         HashMap<String, Object> response = new HashMap<>();
         response.put("posts", postList);
@@ -31,8 +32,8 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public BoardDto getPost(@ModelAttribute BoardDto boardDto) throws Exception {
-        BoardDto response = service.getDetailPost(boardDto);
+    public ArrayList<BoardVo> getPost(@ModelAttribute BoardVo boardVo) throws Exception {
+        ArrayList<BoardVo> response = service.getDetailPost(boardVo);
 
         return response;
     }

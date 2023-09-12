@@ -1,47 +1,51 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 
 const PostList = (props) => {
-  const navigate = useNavigate();
-  const { id, list, deleteContent } = props;
-  const [click, setClick] = useState(false);
+    const navigate = useNavigate();
+    const {id, list, deleteContent} = props;
+    const [click, setClick] = useState(false);
 
-  return (
-    <>
-      <ListTitle
-        onClick={() => {
-          setClick(!click);
-        }}
-      >
-        <div className='id'>{id + 1}</div>
-        <div className='title'>{list?.title}</div>
-        <div className='name'>{list?.userName}</div>
-        <div className='date'>{list?.createAt?.split(" ")[0]}</div>
-      </ListTitle>
-      {click && (
-        <ListContent>
-          <div className='content'>{list?.content}</div>
-          <div className='edit'>
+    useEffect(() => {
+        setClick(false)
+    }, list)
+    return (
+        <>
+            <ListTitle
+                onClick={() => {
+                    setClick(!click);
+                }}
+            >
+                <div className='id'>{id + 1}</div>
+                <div className='title'>{list?.title}</div>
+                <div className='name'>{list?.userName}</div>
+                <div className='date'>{list?.createAt}</div>
+            </ListTitle>
+            {click && (
+                <ListContent>
+                    <div className='content'>{list?.content}</div>
+                    <div className='edit'>
             <span
-              onClick={() => {
-                navigate(`/create-post/${list?.id}`);
-              }}
+                onClick={() => {
+                    navigate(`/create-post/${list?.id}`);
+                }}
             >
               수정
             </span>
-            <span
-              onClick={() => {
-                deleteContent(list?.id);
-              }}
-            >
+                        <span
+                            onClick={() => {
+                                deleteContent(list?.id);
+                                setClick(false)
+                            }}
+                        >
               삭제
             </span>
-          </div>
-        </ListContent>
-      )}
-    </>
-  );
+                    </div>
+                </ListContent>
+            )}
+        </>
+    );
 };
 
 const ListTitle = styled.div`
@@ -63,16 +67,19 @@ const ListTitle = styled.div`
     display: flex;
     justify-content: center;
   }
+
   .title {
     width: 65%;
     display: flex;
     justify-content: flex-start;
   }
+
   .name {
     width: 10%;
     display: flex;
     justify-content: flex-end;
   }
+
   .date {
     width: 15%;
     display: flex;
@@ -82,7 +89,7 @@ const ListTitle = styled.div`
 
 const ListContent = styled.div`
   width: 100%;
-  height: 60px;
+  min-height: 60px;
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
